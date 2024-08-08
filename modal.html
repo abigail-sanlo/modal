@@ -1,0 +1,441 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Card and Modal</title>
+    <link
+      rel="stylesheet"
+      href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap"
+    />
+    <style>
+      body {
+        background: #e0eafc; /* fallback for old browsers */
+        background: -webkit-linear-gradient(
+          to right,
+          #cfdef3,
+          #e0eafc
+        ); /* Chrome 10-25, Safari 5.1-6 */
+        background: linear-gradient(
+          to right,
+          #cfdef3,
+          #e0eafc
+        ); /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
+        font-family: "Poppins", sans-serif;
+      }
+
+      .close {
+        display: block;
+        float: right;
+        background-color: transparent;
+        border: 0;
+        font-size: 1.5rem;
+      }
+
+      dialog::backdrop {
+        background-color: rgba(0, 0, 0, 0.5);
+        backdrop-filter: blur(2px);
+      }
+      dialog, .main-card {
+        background: #00416a; /* fallback for old browsers */
+        background: -webkit-linear-gradient(
+          to bottom,
+          #e4e5e6,
+          #00416a
+        ); /* Chrome 10-25, Safari 5.1-6 */
+        background: linear-gradient(
+          to bottom,
+          #e4e5e6,
+          #00416a
+        ); /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
+      }
+      .gap-5 {
+        gap: 1.25rem;
+      }
+      .items-center {
+        align-items: center;
+      }
+      .h-screen {
+        height: 100vh;
+      }
+      .flex {
+        display: flex;
+      }
+      .justify-center {
+        justify-content: center;
+      }
+      .gap-2 {
+        gap: 0.5rem;
+      }
+      .max-w-main {
+        max-width: 1800px;
+      }
+      .p-4 {
+        padding: 1rem;
+      }
+      .rounded-lg {
+        border-radius: 0.5rem;
+      }
+      .hidden {
+        display: none;
+      }
+      .w-80vw {
+        width: 80vw;
+      }
+      .w-1-2 {
+        width: 50vw;
+      }
+      .closeDialog {
+        background-color: #f3f4f6;
+        border: 1px solid #d1d5db;
+        color: #374151;
+        padding: 0.5rem 1rem;
+        border-radius: 0.25rem;
+        cursor: pointer;
+        margin-top: 1rem;
+      }
+      .closeDialog:hover {
+        background-color: #e5e7eb;
+      }
+      .h-80 {
+        height: 20rem;
+      }
+      .bg-white {
+        background-color: #fff;
+      }
+      .p-10 {
+        padding: 2.5rem;
+      }
+      .m-auto {
+        margin: auto;
+      }
+      .relative {
+        position: relative;
+      }
+      .-top-12 {
+        top: -3rem;
+      }
+      .rounded-full {
+        border-radius: 9999px;
+      }
+      .h-img {
+        height: 10rem;
+      }
+      .w-img {
+        width: 10rem;
+      }
+      .text-xl {
+        font-size: 1.25rem;
+      }
+      .font-medium {
+        font-weight: 500;
+      }
+      .text-lg {
+        font-size: 1.125rem;
+      }
+      .font-light {
+        font-weight: 300;
+      }
+      .flex-col {
+        flex-direction: column;
+      }
+      .gap-4 {
+        gap: 1rem;
+      }
+      .scale-1:hover {
+        transform: scale(1.02);
+      }
+      .transition {
+        transition-property: all;
+      }
+      .duration-300 {
+        transition-duration: 300ms;
+      }
+      .ease-in-out {
+        transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
+      }
+      .bg-blue-600 {
+        background-color: #0062b3;
+      }
+      button {
+        cursor: pointer;
+        border: none;
+      }
+      .bg-blue-600:hover {
+        background-color: #0259a1;
+      }
+
+      .text-white {
+        color: #fff;
+      }
+      .font-medium {
+        font-weight: 500;
+      }
+      .text-xs {
+        font-size: 0.75rem;
+      }
+      .leading-tight {
+        line-height: 1.25;
+      }
+      .uppercase {
+        text-transform: uppercase;
+      }
+      .rounded {
+        border-radius: 0.25rem;
+      }
+      .shadow-md {
+        box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1),
+          0 2px 4px -1px rgba(0, 0, 0, 0.06);
+      }
+      .bg-blue-700:hover {
+        background-color: #1d4ed8;
+      }
+      .shadow-lg:hover {
+        box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1),
+          0 4px 6px -2px rgba(0, 0, 0, 0.05);
+      }
+      .transition {
+        transition-property: all;
+      }
+      .duration-300 {
+        transition-duration: 300ms;
+      }
+
+      .ease-in-out {
+        transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
+      }
+      .inline-block {
+        display: inline-block;
+      }
+      .px-6 {
+        padding-left: 1.5rem;
+        padding-right: 1.5rem;
+      }
+
+      .py-3 {
+        padding-top: 0.625rem;
+        padding-bottom: 0.625rem;
+      }
+
+      .justify-end {
+        justify-content: flex-end;
+      }
+      .absolute {
+        position: absolute;
+      }
+      .justify-between {
+        justify-content: space-between;
+      }
+      .w-fit {
+        width: fit-content;
+      }
+      .items-end {
+        align-items: flex-end;
+      }
+      .p-5 {
+        padding: 1.25rem;
+      }
+      .h-buttons {
+        height: -webkit-fill-available;
+      }
+      .rounded-full {
+        border-radius: 9999px;
+      }
+      .text-white{
+        color: #fff;
+      }
+      .p-10{
+        padding: 2.5rem;
+      }
+      .flex-wrap{
+        flex-wrap: wrap;
+      } 
+      @media (max-width: 768px) {
+        .w-1-2 {
+          width: 90vw;
+        }
+        .w-img{
+            width: 8rem;
+        }
+        .h-img{
+            height: 8rem;
+        }
+        .p-4{
+            padding: 0rem
+        }
+      }
+    </style>
+    <script>
+       document.addEventListener("DOMContentLoaded", () => {
+        const dialog = document.querySelector("dialog");
+        const modalBtn = document.querySelector(".openModal");
+        const closeBtn = document.querySelector(".closeDialog");
+        const close = document.querySelector(".close");
+
+        dialog.addEventListener("click", (e) => {
+          if (e.target === dialog) {
+            dialog.close();
+            dialog.classList.add("hidden");
+          }
+        });
+
+        modalBtn.addEventListener("click", () => {
+          dialog.classList.remove("hidden");
+          dialog.showModal();
+        });
+
+        close.addEventListener("click", (e) => {
+          e.stopPropagation();
+          dialog.close();
+          dialog.classList.add("hidden");
+        });
+
+        closeBtn.addEventListener("click", () => {
+          dialog.close();
+          dialog.classList.add("hidden");
+        });
+
+        dialog.addEventListener("close", () => {
+          dialog.classList.add("hidden");
+        });
+      });
+    </script>
+  </head>
+  <body
+    class="flex items-center justify-center h-screen bg-gray-100 gap-2 max-w-main w-1-2 m-auto"
+  >
+    <dialog class="p-10 flex flex-col w-80vw rounded-lg hidden">
+      <button class="close flex text-lg font-bold justify-end" aria-label="Close">&times;</button>
+
+      <iframe
+        src="https://drive.google.com/file/d/1iCF2oZF86GaLggrrzzG24OuwjfwnC9Jc/preview"
+        width="100%"
+        height="400"
+      ></iframe>
+      <!-- <form method="dialog">
+            <button class="closeDialog">OK</button>
+            <button class="closeDialog">Close the modal</button>
+        </form> -->
+    </dialog>
+
+    <div class="main-card bg-white rounded-lg p-5 md:p-10 m-auto w-1-2 relative h-80">
+      <div class="absolute -top-12 flex flex-col gap-4 p-4">
+        <img
+          src="https://via.placeholder.com/150"
+          alt="profile"
+          class="rounded-full h-img w-img"
+        />
+        <div>
+          <h1 style="margin: 0" class="text-xl font-medium text-white">
+            Front-end developer
+          </h1>
+          <span class="text-lg font-light text-white">Abigail Sánchez López | <b>3 exp</b></span>
+
+          <div class="flex flex-wrap gap-2 text-white">
+            <div class="rounded-lg text-xs uppercase">Reactjs</div>
+            <div class="rounded-lg text-xs uppercase">Typescript</div>
+            <div class="rounded-lg text-xs uppercase">Nextsjs</div>
+            <div class="rounded-lg text-xs uppercase">Tailwind</div>
+            <div class="rounded-lg text-xs uppercase">css</div>
+            <div class="rounded-lg text-xs uppercase">Vuejs</div>
+
+          </div>
+        </div>
+      </div>
+
+      <div class="flex flex-col justify-between items-end p-5 h-buttons">
+        <div class="flex justify-end items-center gap-5 p-4">
+          <a
+            href="mailto:abisl9160@gmail.com"
+            class="scale-1 transition duration-300 ease-in-out"
+          >
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              xmlns:xlink="http://www.w3.org/1999/xlink"
+              width="25px"
+              height="25px"
+              version="1.1"
+              id="_x32_"
+              viewBox="0 0 512 512"
+              xml:space="preserve"
+            >
+              <style type="text/css">
+                .st0 {
+                  fill: #fff;
+                }
+              </style>
+              <g>
+                <path
+                  class="st0"
+                  d="M510.678,112.275c-2.308-11.626-7.463-22.265-14.662-31.054c-1.518-1.915-3.104-3.63-4.823-5.345
+                    c-12.755-12.818-30.657-20.814-50.214-20.814H71.021c-19.557,0-37.395,7.996-50.21,20.814c-1.715,1.715-3.301,3.43-4.823,5.345
+                    C8.785,90.009,3.63,100.649,1.386,112.275C0.464,116.762,0,121.399,0,126.087V385.92c0,9.968,2.114,19.55,5.884,28.203
+                    c3.497,8.26,8.653,15.734,14.926,22.001c1.59,1.586,3.169,3.044,4.892,4.494c12.286,10.175,28.145,16.32,45.319,16.32h369.958
+                    c17.18,0,33.108-6.145,45.323-16.384c1.718-1.386,3.305-2.844,4.891-4.43c6.27-6.267,11.425-13.741,14.994-22.001v-0.064
+                    c3.769-8.653,5.812-18.171,5.812-28.138V126.087C512,121.399,511.543,116.762,510.678,112.275z M46.509,101.571
+                    c6.345-6.338,14.866-10.175,24.512-10.175h369.958c9.646,0,18.242,3.837,24.512,10.175c1.122,1.129,2.179,2.387,3.112,3.637
+                    L274.696,274.203c-5.348,4.687-11.954,7.002-18.696,7.002c-6.674,0-13.276-2.315-18.695-7.002L43.472,105.136
+                    C44.33,103.886,45.387,102.7,46.509,101.571z M36.334,385.92V142.735L176.658,265.15L36.405,387.435
+                    C36.334,386.971,36.334,386.449,36.334,385.92z M440.979,420.597H71.021c-6.281,0-12.158-1.651-17.174-4.552l147.978-128.959
+                    l13.815,12.018c11.561,10.046,26.028,15.134,40.36,15.134c14.406,0,28.872-5.088,40.432-15.134l13.808-12.018l147.92,128.959
+                    C453.137,418.946,447.26,420.597,440.979,420.597z M475.666,385.92c0,0.529,0,1.051-0.068,1.515L335.346,265.221L475.666,142.8
+                    V385.92z"
+                ></path>
+              </g>
+            </svg>
+          </a>
+          <a
+            href="https://wa.me/525619045247"
+            class="scale-1 transition duration-300 ease-in-out"
+          >
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              x="0px"
+              y="0px"
+              width="25px"
+              height="25px"
+              viewBox="0 0 50 50"
+              fill="#fff"
+            >
+              <path
+                d="M25,2C12.318,2,2,12.318,2,25c0,3.96,1.023,7.854,2.963,11.29L2.037,46.73c-0.096,0.343-0.003,0.711,0.245,0.966
+                C2.473,47.893,2.733,48,3,48c0.113,0,0.228-0.019,0.34-0.059l10.907-3.735C17.204,45.952,21.056,47,25,47
+                c12.682,0,23-10.318,23-23S37.682,2,25,2z M25,44c-3.732,0-7.351-1.048-10.501-3.028c-0.15-0.096-0.326-0.147-0.505-0.147
+                c-0.113,0-0.226,0.018-0.337,0.057l-8.678,2.973l2.726-8.726c0.115-0.368,0.051-0.768-0.173-1.08C5.838,32.471,5,28.773,5,25
+                C5,13.421,13.421,5,25,5s20,8.421,20,20S36.579,44,25,44z"
+              ></path>
+              <path
+                d="M37.156,29.286l-3.84-3.831c-0.527-0.526-1.379-0.585-1.992-0.142l-2.505,1.799c-0.641,0.46-1.526,0.367-2.066-0.215
+                l-2.133-2.345c-0.484-0.532-0.597-1.308-0.286-1.96l1.199-2.518c0.308-0.646,0.183-1.418-0.312-1.939l-3.92-4.137
+                c-0.448-0.472-1.138-0.625-1.746-0.392c-1.083,0.404-2.363,1.317-2.733,2.415c-0.701,2.106-0.164,4.683,1.524,7.429
+                c1.653,2.672,3.785,4.799,6.457,6.459c2.748,1.688,5.327,2.225,7.429,1.523c1.099-0.367,2.01-1.647,2.415-2.733
+                C37.781,30.428,37.63,29.738,37.156,29.286z"
+              ></path>
+            </svg>
+          </a>
+          <a href="https://www.linkedin.com/in/abigail-sanchezz/">
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              x="0px"
+              y="0px"
+              width="25"
+              height="25"
+              viewBox="0 0 24 24"
+              fill="#fff"
+            >
+              <path
+                d="M19,3H5C3.895,3,3,3.895,3,5v14c0,1.105,0.895,2,2,2h14c1.105,0,2-0.895,2-2V5C21,3.895,20.105,3,19,3z M9,17H6.477v-7H9 V17z M7.694,8.717c-0.771,0-1.286-0.514-1.286-1.2s0.514-1.2,1.371-1.2c0.771,0,1.286,0.514,1.286,1.2S8.551,8.717,7.694,8.717z M18,17h-2.442v-3.826c0-1.058-0.651-1.302-0.895-1.302s-1.058,0.163-1.058,1.302c0,0.163,0,3.826,0,3.826h-2.523v-7h2.523v0.977 C13.93,10.407,14.581,10,15.802,10C17.023,10,18,10.977,18,13.174V17z"
+              ></path>
+            </svg>
+          </a>
+        </div>
+        <button
+          class="openModal w-fit inline-block px-6 py-3 bg-blue-600 text-white font-medium text-xs uppercase rounded shadow-md scale-1 transition duration-300 ease-in-out rounded-full"
+          type="button"
+        >
+          Ver CV
+        </button>
+      </div>
+    </div>
+  </body>
+</html>
